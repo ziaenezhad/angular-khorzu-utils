@@ -1,14 +1,36 @@
 {
-  "generator-bower-package": {
-    "context": {
-      "bower_name": "angular-khorzu-utils",
-      "bower_title": "Angular khorzu utils",
-      "bower_desc": "Some services and directives which helps rapidly develop apps",
-      "bower_version": "0.0.1",
-      "bower_url": "https://github.com/sajjad-shirazy/angular-khorzu-utils.git",
-      "bower_repo": "git://github.com/sajjad-shirazy/angular-khorzu-utils.git.git",
-      "bower_bugs": "https://github.com/sajjad-shirazy/angular-khorzu-utils.git/issues",
-      "full_name": "Sajjad Shirazy"
+  "generator-angular-package": {
+    "props": {
+      "moduleName": "angular-khorzu-utils",
+      "description": "Some services and directives which helps rapidly develop apps",
+      "gitUrl": "https://github.com/sajjad-shirazy/angular-khorzu-utils",
+      "keywords": "[\"khrzu\"]",
+      "license": "MIT",
+      "author": {
+        "name": "Sajjad Shirazy",
+        "email": "shirazy.sajjad@gmail.com"
+      },
+      "yourModule": {
+        "original": "angular-khorzu-utils",
+        "camelized": "angularKhorzuUtils",
+        "dasherized": "angular-khorzu-utils",
+        "slugified": "angular-khorzu-utils",
+        "parts": [
+          "angular",
+          "khorzu",
+          "utils"
+        ]
+      },
+      "includeModuleDirectives": true,
+      "includeModuleFilters": true,
+      "includeModuleServices": true,
+      "includeModuleControllers": true,
+      "includeAngularModuleResource": false,
+      "includeAngularModuleCookies": false,
+      "includeAngularModuleSanitize": false,
+      "moduleDirectory": "modules/angular-khorzu-utils",
+      "moduleUnitTestDirectory": "test/unit/angular-khorzu-utils",
+      "moduleUnitE2eDirectory": "test/e2e/angular-khorzu-utils"
     }
   }
 }
