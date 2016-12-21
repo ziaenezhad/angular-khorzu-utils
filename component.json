@@ -1,0 +1,12 @@
+{
+    "name": "angular-khorzu-utils",
+    "version": "0.0.1",
+    "main": [
+        "app/css/angular-khorzu-utils",
+        "app/img/sprites.gif",
+        "app/js/angular-khorzu-utils"
+    ],
+    "dependencies": {
+        "jquery": ">=2.1.1"
+    }
+}

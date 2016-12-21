@@ -1,0 +1,42 @@
+{
+    "name": "angular-khorzu-utils",
+    "version": "0.0.1",
+    "title": "Angular khorzu utils",
+    "appPath": "app",
+    "description": "Some services and directives which helps rapidly develop apps",
+    "keywords": [
+        "image",
+        "video",
+        "gallery"
+    ],
+    "homepage": "https://github.com/sajjad-shirazy/angular-khorzu-utils.git",
+    "author": {
+        "name": "Sajjad Shirazy"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git://github.com/sajjad-shirazy/angular-khorzu-utils.git.git"
+    },
+    "bugs": "https://github.com/sajjad-shirazy/angular-khorzu-utils.git/issues",
+    "dependencies": {
+        "jquery": ">=2.1.1"
+    },
+    "main": [
+        "app/css/angular-khorzu-utils",
+        "app/img/sprites.gif",
+        "app/js/angular-khorzu-utils"
+    ],
+    "ignore": [
+        "/*.*",
+        "**/.*",
+        "node_modules",
+        "bower_components",
+        "app/bower_components",
+        "test",
+        "tests"
+    ],
+    "authors": [
+        "Sajjad Shirazy <YOUR_MAIL@gmail.com>"
+    ],
+    "license": "MIT"
+}
