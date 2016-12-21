@@ -2,7 +2,10 @@
   "name": "angular-khorzu-utils",
   "version": "0.1.0",
   "description": "Some things which helps rapidly develop apps",
-  "keywords": ["angular", "utils"],
+  "keywords": [
+    "angular",
+    "utils"
+  ],
   "authors": [
     {
       "name": "Sajjad Shirazy",
@@ -17,7 +20,7 @@
   "main": [
     "dist/angular-khorzu-utils.js",
     "dist/angular-khorzu-utils.css"
-    ],
+  ],
   "ignore": [
     "*.*",
     "bower",
@@ -26,7 +29,9 @@
     "src",
     "test"
   ],
-  "dependencies": {},
+  "dependencies": {
+    "angular-material": "^1.1.1"
+  },
   "devDependencies": {
     "angular-mocks": ">=1.2.0",
     "angular-scenario": ">=1.2.0",
