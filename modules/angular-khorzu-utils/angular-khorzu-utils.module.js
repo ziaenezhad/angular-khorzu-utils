@@ -18,10 +18,9 @@
   angular.module('angular-khorzu-utils.filters', []);
   
   
-  angular.module('angular-khorzu-utils.services', []);
-  
-  
-    angular.module('angular-khorzu-utils.controllers', []);
+  angular.module('angular-khorzu-utils.services', ['angular-material']);
+
+  angular.module('angular-khorzu-utils.controllers', []);
   
   angular.module('angular-khorzu-utils',
       [
