@@ -40,6 +40,7 @@
   'use strict';
   var backend = {
     api_url : document.getElementById('api_url').getAttribute('value'),
+    login_route : 'auth/login',
     login_state : 'login'
   };
 
@@ -94,7 +95,7 @@
      */
     storage.bind($rootScope, 'user');
     backend.login = function (credits, response_user_item) {
-      return backend.call('auth/login', 'POST', credits,{
+      return backend.call(backend.login_route, 'POST', credits,{
         401: 'نام کاربری یا رمز عبور اشتباه است !'
       }, 'سلام؛ خوش آمدید !').success(function(response){
         $rootScope.user = response_user_item ? response[response_user_item] : response;
