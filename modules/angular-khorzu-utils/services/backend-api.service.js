@@ -1,9 +1,10 @@
 (function(){
   'use strict';
   var backend = {
-    login_state: 'login'
+    api_url : document.getElementById('api_url').getAttribute('value'),
+    login_state : 'login'
   };
-  var api_url = $('#api_url').attr('value');
+
   angular
   .module('angular-khorzu-utils')
   .service('backend', function($rootScope, $state, $q, $timeout, $http, $mdToast, $mdDialog, storage) {    
@@ -11,7 +12,7 @@
       return $http({
         method: method,
         data: data,
-        url: api_url + '' + route,
+        url: backend.api_url + '' + route,
         headers: {
           'Content-Type': 'application/json',
           'Accept': 'application/json',
@@ -72,20 +73,19 @@
      */
     backend.toast = function(message, css_class, delay){
       delay = delay ? delay : 5000;
-      $mdToast.show(
-        $mdToast.simple()
-        .textContent(message)
-        .position('top left')
-        .hideDelay(delay)
-      );      
+      $mdToast.show({
+        template: '<md-toast class="' + css_class + '"><span flex>' + message + '</span></md-toast>',
+        position: 'top left',
+        hideDelay: delay
+      });      
     }
 
     /**
      * get now
-     */
+     
     backend.now = function(format){
       return moment().format(format ? format : 'jD jMMMM jYYYY ساعت HH:mm:ss');
-    };
+    };*/
 
     return backend;
   });
