@@ -94,7 +94,7 @@
      */
     storage.bind($rootScope, 'user');
     backend.login = function (credits, response_user_item) {
-      return call('auth/login', 'POST', credits,{
+      return backend.call('auth/login', 'POST', credits,{
         401: 'نام کاربری یا رمز عبور اشتباه است !'
       }, 'سلام؛ خوش آمدید !').success(function(response){
         $rootScope.user = response_user_item ? response[response_user_item] : response;
@@ -117,6 +117,18 @@
         hideDelay: delay
       });      
     }
+
+    /**
+     * show an alert
+     */
+    backend.alert = function(content, title, ok){
+      $mdDialog.show(
+        $mdDialog.alert()
+        .title(title ? title : 'اطلاع')
+        .textContent(content)
+        .ok(ok ? ok : 'خُب')
+      );
+    };    
 
     /**
      * get now
