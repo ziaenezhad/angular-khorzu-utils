@@ -38,10 +38,13 @@
 
 (function(){
   'use strict';
-  var backend = {};
+  var backend = {
+    login_state: 'login'
+  };
+  var api_url = $('#api_url').attr('value');
   angular
   .module('angular-khorzu-utils')
-  .service('backend', function($rootScope, $state, $q, $timeout, $http, $mdToast, $mdDialog) {
+  .service('backend', function($rootScope, $state, $q, $timeout, $http, $mdToast, $mdDialog, storage) {    
     backend.call = function(route, method, data, errors, successMessage){
       return $http({
         method: method,
@@ -70,7 +73,7 @@
               break;
             case 401:
               message = 'دسترسی شما به این قسمت مورد تایید نمی باشد.';
-              _this.logout();
+              backend.logout();
               break;
             case 500:
               message = 'متاسفانه سرور دچار اشکال شده !';
@@ -84,6 +87,27 @@
         backend.toast(message, 'error');
       });
     };
+
+    /**
+     * Authentication method
+     */
+    storage.bind($rootScope, 'user');
+    backend.login = function (credits, response_user_item) {
+      return call('auth/login', 'POST', credits,{
+        401: 'نام کاربری یا رمز عبور اشتباه است !'
+      }, 'سلام؛ خوش آمدید !').success(function(response){
+        $rootScope.user = response_user_item ? response[response_user_item] : response;
+      });
+    };
+    backend.logout = function(){
+      $rootScope.user = null;
+      $state.go(backend.login_state);
+      return $q.resolve();
+    };
+
+    /**
+     * show a toast alert
+     */
     backend.toast = function(message, css_class, delay){
       delay = delay ? delay : 5000;
       $mdToast.show(
@@ -93,7 +117,14 @@
         .hideDelay(delay)
       );      
     }
-    // Public API
+
+    /**
+     * get now
+     */
+    backend.now = function(format){
+      return moment().format(format ? format : 'jD jMMMM jYYYY ساعت HH:mm:ss');
+    };
+
     return backend;
   });
 })();
