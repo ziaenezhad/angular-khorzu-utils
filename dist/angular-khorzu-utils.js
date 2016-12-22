@@ -18,7 +18,10 @@
   angular.module('angular-khorzu-utils.filters', []);
   
   
-  angular.module('angular-khorzu-utils.services', ['ngMaterial']);
+  angular.module('angular-khorzu-utils.services', [
+    'angularLocalStorage',
+    'ngMaterial'
+  ]);
 
   angular.module('angular-khorzu-utils.controllers', []);
   
