@@ -6,13 +6,15 @@
 
   // Config
   angular.module('angular-khorzu-utils.config', [])
-      .value('angular-khorzu-utils.config', {
-          debug: true
-      });
+  .value('angular-khorzu-utils.config', {
+      debug: true
+  });
 
   // Modules
   
-  angular.module('angular-khorzu-utils.directives', []);
+  angular.module('angular-khorzu-utils.directives', [
+    'ngMaterial'
+  ]);
   
   
   angular.module('angular-khorzu-utils.filters', []);
@@ -26,12 +28,11 @@
   angular.module('angular-khorzu-utils.controllers', []);
   
   angular.module('angular-khorzu-utils',
-      [
-        'angular-khorzu-utils.config',
-        'angular-khorzu-utils.directives',
-        'angular-khorzu-utils.filters',
-        'angular-khorzu-utils.services',
-        'angular-khorzu-utils.controllers'
-      ]);
-
+  [
+    'angular-khorzu-utils.config',
+    'angular-khorzu-utils.directives',
+    'angular-khorzu-utils.filters',
+    'angular-khorzu-utils.services',
+    'angular-khorzu-utils.controllers'
+  ]);
 })(angular);

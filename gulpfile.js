@@ -144,5 +144,6 @@ gulp.task('webserver', function() {
 });
 
 gulp.task('default', function() {
-    runSequence('process-all', 'build-stylesheets', 'watch', 'webserver');
+    //runSequence('process-all', 'build-stylesheets', 'watch', 'webserver');
+    runSequence('build', 'build-stylesheets');
 });

@@ -6,13 +6,15 @@
 
   // Config
   angular.module('angular-khorzu-utils.config', [])
-      .value('angular-khorzu-utils.config', {
-          debug: true
-      });
+  .value('angular-khorzu-utils.config', {
+      debug: true
+  });
 
   // Modules
   
-  angular.module('angular-khorzu-utils.directives', []);
+  angular.module('angular-khorzu-utils.directives', [
+    'ngMaterial'
+  ]);
   
   
   angular.module('angular-khorzu-utils.filters', []);
@@ -26,32 +28,61 @@
   angular.module('angular-khorzu-utils.controllers', []);
   
   angular.module('angular-khorzu-utils',
-      [
-        'angular-khorzu-utils.config',
-        'angular-khorzu-utils.directives',
-        'angular-khorzu-utils.filters',
-        'angular-khorzu-utils.services',
-        'angular-khorzu-utils.controllers'
-      ]);
-
+  [
+    'angular-khorzu-utils.config',
+    'angular-khorzu-utils.directives',
+    'angular-khorzu-utils.filters',
+    'angular-khorzu-utils.services',
+    'angular-khorzu-utils.controllers'
+  ]);
 })(angular);
 
+angular.module("angular-khorzu-utils.directives").run(["$templateCache", function($templateCache) {$templateCache.put("angular-khorzu-utils/directives/loading.tpl.html","<div class=\"overally\" ng-show=\"show\" layout=\"\" layout-fill=\"\" layout-align=\"center center\" aria-hidden=\"true\" style=\"\">\r\n    <div class=\"\" aria-hidden=\"true\" style=\"\">\r\n        <md-progress-circular md-mode=\"indeterminate\" md-diameter=\"96\"></md-progress-circular>\r\n    </div>\r\n</div>\r\n<ng-transclude></ng-transclude>\r\n");}]);
+(function() {
+  'use strict';
+
+  angular
+  .module('angular-khorzu-utils.directives')
+  .directive('kLoading',  function() {
+      return {
+        restrict: 'A',
+        replace: false,
+        transclude: true,
+        templateUrl: 'modules/angular-khorzu-utils/directives/loading.tpl.html',
+        controller: loadingController,
+        scope: {
+          show: '=kLoading'
+        }
+      };
+  });
+  function loadingController($element, $scope){
+    /*$scope.$watch('show',function(){
+      if($scope.show){
+        $element.shoW();
+      }else{
+        $element.hide();
+      }
+    }, $scope.show);*/
+  }
+})();
 (function(){
   'use strict';
-  var backend = {
-    api_url : document.getElementById('api_url').getAttribute('value'),
-    login_route : 'auth/login',
-    login_state : 'login'
+  var khorzu = {
+    configs:{
+      api_url : document.getElementById('api_url').getAttribute('value'),
+      login_route : 'auth/login',
+      login_state : 'login'
+    }
   };
 
   angular
-  .module('angular-khorzu-utils')
-  .service('backend', function($rootScope, $state, $q, $timeout, $http, $mdToast, $mdDialog, storage) {    
-    backend.call = function(route, method, data, errors, successMessage){
+  .module('angular-khorzu-utils.services')
+  .service('khorzu', function($rootScope, $state, $q, $timeout, $http, $mdToast, $mdDialog, storage) {    
+    khorzu.jwtRequest = function(route, method, data, errors, successMessage){
       return $http({
         method: method,
         data: data,
-        url: backend.api_url + '' + route,
+        url: khorzu.configs.api_url + '' + route,
         headers: {
           'Content-Type': 'application/json',
           'Accept': 'application/json',
@@ -60,7 +91,7 @@
       }).success(function(){
         if(successMessage != -1){
           $timeout(function(){
-            backend.toast(successMessage ? successMessage : 'درخواست شما با موفقیت انجام شد.', 'success', 2000);
+            khorzu.toast(successMessage ? successMessage : 'درخواست شما با موفقیت انجام شد.', 'success', 2000);
           }, 500);
         }
       }).error(function (data, status, header, config){
@@ -75,7 +106,7 @@
               break;
             case 401:
               message = 'دسترسی شما به این قسمت مورد تایید نمی باشد.';
-              backend.logout();
+              khorzu.logout();
               break;
             case 500:
               message = 'متاسفانه سرور دچار اشکال شده !';
@@ -86,7 +117,7 @@
           }
         }
         console.error(message);
-        backend.toast(message, 'error');
+        khorzu.toast(message, 'error');
       });
     };
 
@@ -94,23 +125,23 @@
      * Authentication method
      */
     storage.bind($rootScope, 'user');
-    backend.login = function (credits, response_user_item) {
-      return backend.call(backend.login_route, 'POST', credits,{
+    khorzu.login = function (credits, response_user_item) {
+      return khorzu.jwtRequest(khorzu.configs.login_route, 'POST', credits,{
         401: 'نام کاربری یا رمز عبور اشتباه است !'
       }, 'سلام؛ خوش آمدید !').success(function(response){
         $rootScope.user = response_user_item ? response[response_user_item] : response;
       });
     };
-    backend.logout = function(){
+    khorzu.logout = function(){
       $rootScope.user = null;
-      $state.go(backend.login_state);
+      $state.go(khorzu.configs.login_state);
       return $q.resolve();
     };
 
     /**
      * show a toast alert
      */
-    backend.toast = function(message, css_class, delay){
+    khorzu.toast = function(message, css_class, delay){
       delay = delay ? delay : 5000;
       $mdToast.show({
         template: '<md-toast class="' + css_class + '"><span flex>' + message + '</span></md-toast>',
@@ -122,7 +153,7 @@
     /**
      * show an alert
      */
-    backend.alert = function(content, title, ok){
+    khorzu.alert = function(content, title, ok){
       $mdDialog.show(
         $mdDialog.alert()
         .title(title ? title : 'اطلاع')
@@ -134,10 +165,10 @@
     /**
      * get now
      
-    backend.now = function(format){
+    khorzu.now = function(format){
       return moment().format(format ? format : 'jD jMMMM jYYYY ساعت HH:mm:ss');
     };*/
 
-    return backend;
+    return khorzu;
   });
 })();
