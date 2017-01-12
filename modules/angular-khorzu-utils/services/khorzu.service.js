@@ -10,7 +10,10 @@
 
   angular
   .module('angular-khorzu-utils.services')
-  .service('khorzu', function($rootScope, $state, $q, $timeout, $http, $mdToast, $mdDialog, storage) {    
+  .service('khorzu', Khorzu);
+
+  /** @ngInject */
+  function Khorzu($rootScope, $state, $q, $timeout, $http, $mdToast, $mdDialog, storage) {    
     khorzu.jwtRequest = function(route, method, data, errors, successMessage){
       return $http({
         method: method,
@@ -88,7 +91,11 @@
      */
     khorzu.alert = function(content, title, ok){
       $mdDialog.show(
-        $mdDialog.alert()
+        $mdDialog.alert({
+          preserveScope: true,
+          autoWrap: true,
+          skipHide: true,
+        })
         .title(title ? title : 'اطلاع')
         .textContent(content)
         .ok(ok ? ok : 'خُب')
@@ -103,5 +110,5 @@
     };*/
 
     return khorzu;
-  });
+  }
 })();

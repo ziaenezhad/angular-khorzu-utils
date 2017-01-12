@@ -48,7 +48,7 @@ angular.module("angular-khorzu-utils.directives").run(["$templateCache", functio
         restrict: 'A',
         replace: false,
         transclude: true,
-        templateUrl: 'modules/angular-khorzu-utils/directives/loading.tpl.html',
+        templateUrl: 'angular-khorzu-utils/directives/loading.tpl.html',
         controller: loadingController,
         scope: {
           show: '=kLoading'
@@ -77,7 +77,10 @@ angular.module("angular-khorzu-utils.directives").run(["$templateCache", functio
 
   angular
   .module('angular-khorzu-utils.services')
-  .service('khorzu', function($rootScope, $state, $q, $timeout, $http, $mdToast, $mdDialog, storage) {    
+  .service('khorzu', Khorzu);
+
+  /** @ngInject */
+  function Khorzu($rootScope, $state, $q, $timeout, $http, $mdToast, $mdDialog, storage) {    
     khorzu.jwtRequest = function(route, method, data, errors, successMessage){
       return $http({
         method: method,
@@ -155,7 +158,11 @@ angular.module("angular-khorzu-utils.directives").run(["$templateCache", functio
      */
     khorzu.alert = function(content, title, ok){
       $mdDialog.show(
-        $mdDialog.alert()
+        $mdDialog.alert({
+          preserveScope: true,
+          autoWrap: true,
+          skipHide: true,
+        })
         .title(title ? title : 'اطلاع')
         .textContent(content)
         .ok(ok ? ok : 'خُب')
@@ -170,5 +177,5 @@ angular.module("angular-khorzu-utils.directives").run(["$templateCache", functio
     };*/
 
     return khorzu;
-  });
+  }
 })();

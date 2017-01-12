@@ -8,7 +8,7 @@
         restrict: 'A',
         replace: false,
         transclude: true,
-        templateUrl: 'modules/angular-khorzu-utils/directives/loading.tpl.html',
+        templateUrl: 'angular-khorzu-utils/directives/loading.tpl.html',
         controller: loadingController,
         scope: {
           show: '=kLoading'
