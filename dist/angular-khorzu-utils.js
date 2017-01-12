@@ -105,7 +105,7 @@ angular.module("angular-khorzu-utils.directives").run(["$templateCache", functio
         khorzu.logout();
       }]
     });
-    $httpProvider.interceptors.push('jwtInterceptor');
+    //$httpProvider.interceptors.push('jwtInterceptor');
   }
 
   /** @ngInject */
@@ -118,7 +118,7 @@ angular.module("angular-khorzu-utils.directives").run(["$templateCache", functio
         headers: {
           'Content-Type': 'application/json',
           'Accept': 'application/json',
-          //'Authorization': $rootScope.user ? $rootScope.user.token : null
+          'Authorization': $rootScope.token
         }
       }).success(function(){
         if(successMessage != -1){
