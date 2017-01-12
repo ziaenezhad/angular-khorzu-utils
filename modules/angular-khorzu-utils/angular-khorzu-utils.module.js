@@ -22,7 +22,8 @@
   
   angular.module('angular-khorzu-utils.services', [
     'angularLocalStorage',
-    'ngMaterial'
+    'ngMaterial',
+    'angular-jwt'
   ]);
 
   angular.module('angular-khorzu-utils.controllers', []);

@@ -22,7 +22,8 @@
   
   angular.module('angular-khorzu-utils.services', [
     'angularLocalStorage',
-    'ngMaterial'
+    'ngMaterial',
+    'angular-jwt'
   ]);
 
   angular.module('angular-khorzu-utils.controllers', []);
@@ -69,21 +70,46 @@ angular.module("angular-khorzu-utils.directives").run(["$templateCache", functio
 })();
 (function(){
   'use strict';
-  khorzuService.$inject = ["$rootScope", "$state", "$q", "$timeout", "$http", "$mdToast", "$mdDialog", "storage"];
+  khorzuRun.$inject = ["$rootScope", "authManager", "storage"];
+  khorzConfig.$inject = ["$httpProvider", "jwtOptionsProvider"];
+  khorzuService.$inject = ["$rootScope", "$state", "$q", "$timeout", "$http", "$mdToast", "$mdDialog", "jwtHelper"];
   var khorzu = {
     configs:{
       api_url : document.getElementById('api_url').getAttribute('value'),
-      login_route : 'auth/login',
-      login_state : 'login'
+      login_route : 'user/login',
+      login_state : 'login',
+      authPrefix: ''
     }
   };
 
   angular
   .module('angular-khorzu-utils.services')
-  .service('khorzu', khorzuService);
+  .config(khorzConfig)
+  .service('khorzu', khorzuService)
+  .run(khorzuRun);
 
   /** @ngInject */
-  function khorzuService($rootScope, $state, $q, $timeout, $http, $mdToast, $mdDialog, storage) {    
+  function khorzuRun($rootScope, authManager, storage){
+    authManager.redirectWhenUnauthenticated();
+    storage.bind($rootScope, 'token');
+  }
+
+  /** @ngInject */
+  function khorzConfig($httpProvider, jwtOptionsProvider){
+    jwtOptionsProvider.config({
+      authPrefix: khorzu.authPrefix,
+      tokenGetter: function() {
+        return localStorage.getItem('token');
+      },
+      unauthenticatedRedirector: ['khorzu', function(khorzu) {
+        khorzu.logout();
+      }]
+    });
+    $httpProvider.interceptors.push('jwtInterceptor');
+  }
+
+  /** @ngInject */
+  function khorzuService($rootScope, $state, $q, $timeout, $http, $mdToast, $mdDialog, jwtHelper) {    
     khorzu.jwtRequest = function(route, method, data, errors, successMessage){
       return $http({
         method: method,
@@ -92,7 +118,7 @@ angular.module("angular-khorzu-utils.directives").run(["$templateCache", functio
         headers: {
           'Content-Type': 'application/json',
           'Accept': 'application/json',
-          'Authorization': $rootScope.user ? $rootScope.user.token : null
+          //'Authorization': $rootScope.user ? $rootScope.user.token : null
         }
       }).success(function(){
         if(successMessage != -1){
@@ -129,13 +155,12 @@ angular.module("angular-khorzu-utils.directives").run(["$templateCache", functio
 
     /**
      * Authentication method
-     */
-    storage.bind($rootScope, 'user');
-    khorzu.login = function (credits, response_user_item) {
+     */    
+    khorzu.login = function (credits) {
       return khorzu.jwtRequest(khorzu.configs.login_route, 'POST', credits,{
         401: 'نام کاربری یا رمز عبور اشتباه است !'
-      }, 'سلام؛ خوش آمدید !').success(function(response){
-        $rootScope.user = response_user_item ? response[response_user_item] : response;
+      }, 'سلام؛ خوش آمدید !').success(function(token){
+        $rootScope.token = token;
       });
     };
     khorzu.logout = function(){
@@ -170,7 +195,7 @@ angular.module("angular-khorzu-utils.directives").run(["$templateCache", functio
         .textContent(content)
         .ok(ok ? ok : 'خُب')
       );
-    };    
+    };
 
     /**
      * get now
