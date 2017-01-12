@@ -10,10 +10,10 @@
 
   angular
   .module('angular-khorzu-utils.services')
-  .service('khorzu', khorzu);
+  .service('khorzu', khorzuService);
 
   /** @ngInject */
-  function khorzu($rootScope, $state, $q, $timeout, $http, $mdToast, $mdDialog, storage) {    
+  function khorzuService($rootScope, $state, $q, $timeout, $http, $mdToast, $mdDialog, storage) {    
     khorzu.jwtRequest = function(route, method, data, errors, successMessage){
       return $http({
         method: method,

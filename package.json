@@ -2,14 +2,16 @@
   "name": "angular-khorzu-utils",
   "version": "0.1.0",
   "description": "Some services and directives which helps rapidly develop apps",
-  "keywords": ["khrzu"],
+  "keywords": [
+    "khrzu"
+  ],
   "author": {
     "name": "Sajjad Shirazy",
     "email": "shirazy.sajjad@gmail.com"
   },
   "repository": {
-   "type": "git",
-   "url": "https://github.com/sajjad-shirazy/angular-khorzu-utils"
+    "type": "git",
+    "url": "https://github.com/sajjad-shirazy/angular-khorzu-utils"
   },
   "license": "MIT",
   "dependencies": {},
@@ -22,6 +24,7 @@
     "gulp-concat": "^2.3.4",
     "gulp-concat-css": "^2.2.0",
     "gulp-jshint": "^2.0.1",
+    "gulp-ng-annotate": "^2.0.0",
     "gulp-plumber": "^1.1.0",
     "gulp-rename": "^1.2.0",
     "gulp-sass": "^2.3.1",

@@ -12,6 +12,7 @@ var concatCss = require('gulp-concat-css');
 var templateCache = require('gulp-angular-templatecache');
 var eventStream = require('event-stream');
 var webserver = require('gulp-webserver');
+var ngAnnotate = require('gulp-ng-annotate');
 
 /**
  * File patterns
@@ -58,6 +59,7 @@ function getTemplateCache() {
 gulp.task('build', function() {
     return eventStream.merge(gulp.src(sourceFiles), getTemplateCache())
         .pipe(plumber())
+        .pipe(ngAnnotate())
         .pipe(concat('angular-khorzu-utils.js'))
         .pipe(gulp.dest('./dist/'))
         .pipe(uglify())
