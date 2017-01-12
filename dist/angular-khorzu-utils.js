@@ -55,6 +55,7 @@ angular.module("angular-khorzu-utils.directives").run(["$templateCache", functio
         }
       };
   });
+  /** @ngInject */
   function loadingController($element, $scope){
     /*$scope.$watch('show',function(){
       if($scope.show){
@@ -77,10 +78,10 @@ angular.module("angular-khorzu-utils.directives").run(["$templateCache", functio
 
   angular
   .module('angular-khorzu-utils.services')
-  .service('khorzu', Khorzu);
+  .service('khorzu', khorzu);
 
   /** @ngInject */
-  function Khorzu($rootScope, $state, $q, $timeout, $http, $mdToast, $mdDialog, storage) {    
+  function khorzu($rootScope, $state, $q, $timeout, $http, $mdToast, $mdDialog, storage) {    
     khorzu.jwtRequest = function(route, method, data, errors, successMessage){
       return $http({
         method: method,

@@ -15,6 +15,7 @@
         }
       };
   });
+  /** @ngInject */
   function loadingController($element, $scope){
     /*$scope.$watch('show',function(){
       if($scope.show){
