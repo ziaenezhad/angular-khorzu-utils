@@ -83,7 +83,7 @@ angular.module("angular-khorzu-utils.directives").run(["$templateCache", functio
 
   angular
   .module('angular-khorzu-utils.services')
-  .provider('khorzuProvider', function () { return khorzu;})
+  //.provider('khorzuProvider', function () { return khorzu;})
   .config(khorzConfig)
   .service('khorzu', khorzuService)
   .run(khorzuRun);
