@@ -77,13 +77,13 @@ angular.module("angular-khorzu-utils.directives").run(["$templateCache", functio
     configs:{
       api_url : document.getElementById('api_url').getAttribute('value'),
       login_route : 'user/login',
-      login_state : 'login',
-      authPrefix: ''
+      login_state : 'login'
     }
   };
 
   angular
   .module('angular-khorzu-utils.services')
+  .provider('khorzuProvider', function () { return khorzu;})
   .config(khorzConfig)
   .service('khorzu', khorzuService)
   .run(khorzuRun);
@@ -97,7 +97,7 @@ angular.module("angular-khorzu-utils.directives").run(["$templateCache", functio
   /** @ngInject */
   function khorzConfig($httpProvider, jwtOptionsProvider){
     jwtOptionsProvider.config({
-      authPrefix: khorzu.authPrefix,
+      authPrefix: '',
       tokenGetter: function() {
         return localStorage.getItem('token');
       },
