@@ -9,7 +9,7 @@
 	    z-index: 9999;
 	    background: rgba(255, 255, 255, 0.9);
 	}
-	&.k-loading-fullpage{
+	&[k-loading-fullpage]{
 	    height: 100vh;
 	}
 }

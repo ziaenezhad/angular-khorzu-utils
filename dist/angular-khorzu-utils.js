@@ -53,16 +53,12 @@ angular.module("angular-khorzu-utils.directives").run(["$templateCache", functio
         templateUrl: 'angular-khorzu-utils/directives/loading.tpl.html',
         controller: loadingController,
         scope: {
-          show: '=kLoading',
-          fullpage: '=kFullpage'
+          show: '=kLoading'
         }
       };
   });
   /** @ngInject */
   function loadingController($element, $scope){
-    if($scope.fullpage){
-      $element.addClass('k-loading-fullpage');
-    }
     /*$scope.$watch('show',function(){
       if($scope.show){
         $element.shoW();
