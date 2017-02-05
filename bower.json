@@ -28,6 +28,6 @@
     "angular-ui-router": "^0.3.2",
     "angular-material": "^1.0.0",
     "angular-jwt": "^0.1.8",
-    "angularlocalstorage": "^0.3.2"
+    "angularLocalStorage": "^0.3.2"
   }
 }
