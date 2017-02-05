@@ -24,6 +24,10 @@
   "ignore": [
     "bower_components"
   ],
+  "main": [
+    "dist/angular-khorzu-utils.js",
+    "dist/angular-khorzu-utils.css"
+  ],
   "dependencies": {
     "angular-ui-router": "^0.3.2",
     "angular-material": "^1.0.0",

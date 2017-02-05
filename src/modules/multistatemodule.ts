@@ -1,4 +1,4 @@
-import { initializeModule } from '../';
+import { initializeModule } from './module';
 
 export function MultiStateModule(module_name: string, element?: Document | Element) {
 	return (target: any) => {

@@ -1,10 +1,4 @@
-import { name } from '../';
-
-export function Module(name: string, element?: Document | Element) {
-	return (target: any) => {
-		var module = initializeModule(name, target, element);
-	}
-}
+import { name } from '../utils';
 
 export function initializeModule(module_name: string, target, element: Document | Element): ng.IModule {
 	target._name = module_name;
@@ -22,3 +16,10 @@ export function initializeModule(module_name: string, target, element: Document 
 	var instance = new target(module);
 	return module;
 }
+
+export function Module(name: string, element?: Document | Element) {
+	return (target: any) => {
+		var module = initializeModule(name, target, element);
+	}
+}
+
