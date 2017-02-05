@@ -1,43 +1,33 @@
 {
   "name": "angular-khorzu-utils",
-  "version": "0.1.5",
-  "description": "Some things which helps rapidly develop apps",
+  "version": "0.2.0",
+  "description": "Some things in Typescript which helps rapidly develop angular 1.x apps.",
+  "authors": [
+    "Sajjad Shirazy <shirazy.sajjad@gmail.com>"
+  ],
+  "description": "An Angular 1 classe wrappers",
   "keywords": [
     "angular",
+    "angular 1",
     "utils"
+    "typescript",
+    "class",
+    "wrapper",
+    "khorzu"
   ],
-  "authors": [
-    {
-      "name": "Sajjad Shirazy",
-      "email": "shirazy.sajjad@gmail.com"
-    }
-  ],
+  "license": "MIT",
+  "homepage": "https://github.com/sajjad-shirazy/angular-khorzu-utils",  
   "repository": {
     "type": "git",
     "url": "https://github.com/sajjad-shirazy/angular-khorzu-utils"
   },
-  "license": "MIT",
-  "main": [
-    "dist/angular-khorzu-utils.js",
-    "dist/angular-khorzu-utils.css",
-    "angular-khorzu-utils.d.ts"
-  ],
   "ignore": [
-    "*.*",
-    "bower",
-    "modules",
-    "node_modules",
-    "src",
-    "test"
+    "bower_components"
   ],
   "dependencies": {
-    "angular-material": "^1.1.1",
-    "angularLocalStorage": "^0.3.2",
-    "angular-jwt": "^0.1.8"
-  },
-  "devDependencies": {
-    "angular-mocks": ">=1.2.0",
-    "angular-scenario": ">=1.2.0",
-    "angular": ">=1.6.0"
+    "angular-ui-router": "^0.3.2",
+    "angular-material": "^1.0.0",
+    "angular-jwt": "^0.1.8",
+    "angularlocalstorage": "^0.3.2"
   }
 }
