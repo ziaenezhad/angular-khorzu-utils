@@ -84,4 +84,11 @@ export abstract class Model<R extends Resource> {
 			this.$$processing = false;
 		});
 	}
+
+	public action(name: string, messages?: {}) {
+		this.$$processing = true;
+		return this.$$resource.action(this.$$queryPath([name]), messages).finally(() => {
+			this.$$processing = false;
+		});
+	}
 }
