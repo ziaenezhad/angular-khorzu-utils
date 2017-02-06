@@ -99,7 +99,7 @@ export abstract class HttpResource extends Resource {
 	}
 
 	public $post<T>(query: string, data: {}, messages?: {}) {
-		var data_contains_file = Object.keys(data).filter(key => {
+		var data_contains_file = Object.keys(data ? data : {}).filter(key => {
 			return angular.isObject(data[key]) && data[key].constructor.name == 'File';
 		}).length > 0;
 		return data_contains_file ?
