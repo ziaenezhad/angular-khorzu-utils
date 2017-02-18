@@ -11,6 +11,7 @@ export function initializeModule(module_name: string, target, element: Document 
 		module.service(name(service), service);
 	});
 	target.directives && target.directives.forEach(directive => {
+		directive.config.controller = directive;
 		module.directive(name(directive), () => directive.config);
 	});
 	var instance = new target(module);

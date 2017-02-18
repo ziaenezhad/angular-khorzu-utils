@@ -57,20 +57,36 @@ export abstract class Model<R extends Resource> {
 	}
 
 	protected belongsTo<M>(modelClass: IModelClass, foreignKey: string, messages?: {}): ng.IPromise<M> {
-		return this.$$resource.read(modelClass.queryPath([this[foreignKey]]), null, messages).then(responce => {
-			return new (<any>modelClass)(this.$$resource, responce);
+		return this.$$resource.read(modelClass.queryPath([this[foreignKey]]), null, messages).then(response => {
+			response = new (<any>modelClass)(this.$$resource, response);
+			//we sopose here every resource name habeeen ended with 's'
+			var property_name = '$$' + this.$$class.resourceName.substring(0, this.$$class.resourceName.length - 1);
+			this[property_name] = response;
+			return response;
 		});
 	}
 
 	protected hasOne<M>(modelClass: IModelClass, messages?: {}): ng.IPromise<M> {
-		return this.$$resource.read(this.$$queryPath([modelClass.resourceName]), null, messages).then(responce => {
-			return new (<any>modelClass)(this.$$resource, responce);
+		return this.$$resource.read(this.$$queryPath([modelClass.resourceName]), null, messages).then(response => {
+			response = new (<any>modelClass)(this.$$resource, response);
+			//we sopose here every resource name habeeen ended with 's'
+			var property_name = '$$' + this.$$class.resourceName.substring(0, this.$$class.resourceName.length - 1);
+			response[property_name] = this;
+			property_name = '$$' + modelClass.resourceName.substring(0, modelClass.resourceName.length - 1);
+			this[property_name] = response;
+			return response;
 		});
 	}
 
 	protected hasMany<M>(modelClass: IModelClass, messages?: {}): ng.IPromise<M[]> {
-		return this.$$resource.read<M[]>(this.$$queryPath([modelClass.resourceName]), null, messages).then(responce => {
-			return responce.map(record => new (<any>modelClass)(this.$$resource, record));
+		return this.$$resource.read<M[]>(this.$$queryPath([modelClass.resourceName]), null, messages).then(response => {
+			return this['$$' + modelClass.resourceName] = response.map(record => {
+				record = new (<any>modelClass)(this.$$resource, record);
+				//we sopose here every resource name habeeen ended with 's'
+				var property_name = '$$' + this.$$class.resourceName.substring(0, this.$$class.resourceName.length - 1);
+				record[property_name] = this;
+				return record;
+			});
 		});
 	}
 
