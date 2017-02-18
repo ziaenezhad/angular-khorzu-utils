@@ -12,6 +12,7 @@ export function initializeModule(module_name: string, target, element: Document 
 	});
 	target.directives && target.directives.forEach(directive => {
 		directive.config.controller = directive;
+		directive.config.controllerAs = directive.config.controllerAs ? directive.config.controllerAs : 'vm';
 		module.directive(name(directive), () => directive.config);
 	});
 	var instance = new target(module);
