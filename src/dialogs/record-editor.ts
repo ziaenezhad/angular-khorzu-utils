@@ -1,17 +1,14 @@
-import { Resource, Model, IModelClass } from '../';
-import { Dialog } from '.';
+import { Resource, Model, IModelClass } from '../../';
+import { FormDialog } from '.';
 
-export abstract class RecordEditor<M extends Model, R extends Resource> extends Dialog {
+export abstract class RecordEditor<M extends Model<R>, R extends Resource> extends FormDialog {
 	static locals: any = {
 		readOnly: false,
 		entity: null
 	};
-	private errors_inputs: {} = {};
-	protected form: ng.IFormController;
 	protected createMod: boolean;
 
-	constructor(
-		protected $mdDialog: ng.material.IDialogService,
+	constructor($mdDialog,
 		protected resource: R,
 		protected model: IModelClass,
 		protected entity: M
@@ -21,26 +18,9 @@ export abstract class RecordEditor<M extends Model, R extends Resource> extends 
 		this.entity = this.entity ? this.entity : <any>{};
 	}
 
-	protected validate() {
-		this.form.$setSubmitted();
-		if (this.form.$valid) {
-			return true;
-		} else {
-			angular.element('.ng-invalid').first().focus();
-			return false;
-		}
-	}
-
-	protected bindError(error: string | number, inputName: string) {
-		this.errors_inputs[error] = inputName;
-	}
-
 	protected save(messages?: {}): ng.IPromise<M> {
 		if (this.validate()) {
-			messages = messages ? messages : {};
-			Object.keys(this.errors_inputs).forEach(value => {
-				messages[value] = this.form[this.errors_inputs[value]]
-			});
+			messages = this.assignInputsToMessages(messages);
 			return (
 				this.createMod ?
 					this.model.create<M>(this.resource, this.entity, messages) :

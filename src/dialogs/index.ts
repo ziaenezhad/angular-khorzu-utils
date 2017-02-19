@@ -14,4 +14,5 @@ export abstract class Dialog {
 	}
 }
 
+export * from './form-dialog';
 export * from './record-editor';
