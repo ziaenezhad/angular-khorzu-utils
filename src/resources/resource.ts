@@ -18,7 +18,7 @@ export abstract class Resource {
 		if (angular.isDefined(message)) {
 			setTimeout(() => this.$mdToast.show({
 				template: '<md-toast class="' + css_class + '"><span flex>' + message + '</span></md-toast>',
-				position: 'top left',
+				position: 'bottom left',
 				hideDelay: delay
 			}), 500);
 		}
