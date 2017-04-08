@@ -94,10 +94,11 @@ export abstract class Model<R extends Resource> {
 		return <any>this.$$resource.update(this.$$queryPath(), this, messages);
 	}
 
-	public delete(messages?: {}) {
+	public delete(messages?: {}, localList?: Model<R>[]) {
 		this.$$processing = true;
 		return this.$$resource.delete(this.$$queryPath(), messages).finally(() => {
 			this.$$processing = false;
+			localList && localList.splice(localList.indexOf(this), 1);
 		});
 	}
 
