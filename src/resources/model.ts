@@ -108,4 +108,11 @@ export abstract class Model<R extends Resource> {
 			this.$$processing = false;
 		});
 	}
+
+	public read<T>(name: string, params: {} = {}, messages?: {}) {
+		this.$$processing = true;
+		return this.$$resource.read<T>(this.$$queryPath([name]), params, messages).finally(() => {
+			this.$$processing = false;
+		});
+	}
 }
