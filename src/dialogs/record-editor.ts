@@ -1,7 +1,7 @@
 import { Resource, Model, IModelClass } from '../../';
 import { FormDialog } from '.';
 
-export abstract class RecordEditor<M extends Model<R>, R extends Resource> extends FormDialog {
+export abstract class RecordEditor<M extends Model<any>, R extends Resource> extends FormDialog {
 	static locals: any = {
 		readOnly: false,
 		entity: null

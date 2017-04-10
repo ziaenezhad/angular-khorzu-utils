@@ -104,14 +104,22 @@ export abstract class Model<R extends Resource> {
 
 	public action<T>(name: string, params: {} = {}, messages?: {}) {
 		this.$$processing = true;
-		return this.$$resource.action<T>(this.$$queryPath([name]), params, messages).finally(() => {
+		var property = '$$' + _.camelCase(name);
+		this[property] = null;
+		return this.$$resource.action<T>(this.$$queryPath([name]), params, messages).then(responce => {
+			return this[property] = responce;
+		}).finally(() => {
 			this.$$processing = false;
 		});
 	}
 
 	public read<T>(name: string, params: {} = {}, messages?: {}) {
 		this.$$processing = true;
-		return this.$$resource.read<T>(this.$$queryPath([name]), params, messages).finally(() => {
+		var property = '$$' + _.camelCase(name);
+		this[property] = null;
+		return this.$$resource.read<T>(this.$$queryPath([name]), params, messages).then(responce => {
+			return this[property] = responce;
+		}).finally(() => {
 			this.$$processing = false;
 		});
 	}
