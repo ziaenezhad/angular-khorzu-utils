@@ -98,7 +98,9 @@ export abstract class Model<R extends Resource> {
 		this.$$processing = true;
 		return this.$$resource.delete(this.$$queryPath(), messages).finally(() => {
 			this.$$processing = false;
-			localList && localList.splice(localList.indexOf(this), 1);
+			var query = {};
+			query[this.$$class.primaryKey] = this.$$id;
+			localList && localList.splice(_.findIndex(localList, query), 1);
 		});
 	}
 

@@ -1,11 +1,10 @@
 {
   "name": "angular-khorzu-utils",
   "version": "0.2.0",
-  "description": "Some things in Typescript which helps rapidly develop angular 1.x apps.",
+  "description": "An Angular 1 classe wrappers",
   "authors": [
     "Sajjad Shirazy <shirazy.sajjad@gmail.com>"
   ],
-  "description": "An Angular 1 classe wrappers",
   "keywords": [
     "angular",
     "angular 1",
@@ -16,7 +15,7 @@
     "khorzu"
   ],
   "license": "MIT",
-  "homepage": "https://github.com/sajjad-shirazy/angular-khorzu-utils",  
+  "homepage": "https://github.com/sajjad-shirazy/angular-khorzu-utils",
   "repository": {
     "type": "git",
     "url": "https://github.com/sajjad-shirazy/angular-khorzu-utils"
@@ -32,6 +31,7 @@
     "angular-ui-router": "^0.3.2",
     "angular-material": "^1.0.0",
     "angular-jwt": "^0.1.8",
-    "angularLocalStorage": "^0.3.2"
+    "angularLocalStorage": "^0.3.2",
+    "lodash": "^4.17.4"
   }
 }
