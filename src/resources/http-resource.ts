@@ -67,7 +67,9 @@ export abstract class HttpResource extends Resource {
 		if (data && _.find(data, function (item: any) { return angular.isObject(item) && item.constructor.name == 'File'; })) {
 			var formData = new FormData();
 			Object.keys(data).forEach(key => {
-				formData.append(key, data[key]);
+				if (key.slice(0, 2) != '$$') {
+					formData.append(key, data[key]);
+				}
 			});
 			data = formData;
 		}
