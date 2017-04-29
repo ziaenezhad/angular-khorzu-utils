@@ -64,6 +64,13 @@ export abstract class HttpResource extends Resource {
 		if (angular.isObject(data)) {
 			data.$$processing = true;
 		}
+		if (_.find(data, function (item: any) { return angular.isObject(item) && item.constructor.name == 'File'; })) {
+			var formData = new FormData();
+			Object.keys(data).forEach(key => {
+				formData.append(key, data[key]);
+			});
+			data = formData;
+		}
 		var defer = this.$q.defer<T>();
 		var options = {
 			method: method,
@@ -73,7 +80,7 @@ export abstract class HttpResource extends Resource {
 				query
 			].join('/'),
 			headers: angular.extend({
-				'Content-Type': 'application/json',
+				'Content-Type': data.constructor.name == 'FormData' ? undefined : 'application/json',
 				'Accept': 'application/json'
 			}, headers),
 			uploadEventHandlers: {
@@ -99,22 +106,7 @@ export abstract class HttpResource extends Resource {
 	}
 
 	public $post<T>(query: string, data: {}, messages?: {}) {
-		var data_contains_file = Object.keys(data ? data : {}).filter(key => {
-			return angular.isObject(data[key]) && data[key].constructor.name == 'File';
-		}).length > 0;
-		return data_contains_file ?
-			this.$upload<T>(query, data, messages) :
-			this.request<T>(query, 'POST', data, messages);
-	}
-
-	public $upload<T>(query: string, data: {}, messages?: {}) {
-		var formData = new FormData();
-		Object.keys(data).forEach(key => {
-			formData.append(key, data[key]);
-		})
-		return this.request<T>(query, 'POST', formData, messages, {
-			'Content-Type': undefined
-		});
+		return this.request<T>(query, 'POST', data, messages);
 	}
 
 	public $put<T>(query: string, data: {}, messages?: {}) {

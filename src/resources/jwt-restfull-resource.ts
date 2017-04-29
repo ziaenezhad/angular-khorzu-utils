@@ -21,7 +21,7 @@ export abstract class JwtRestfullResource extends RestfullResource {
 		return this.jwtHelper.decodeToken(this.token);
 	}
 
-	public currentUser<T extends Model>(model: IModelClass): T {
+	public currentUser<T extends Model<any>>(model: IModelClass): T {
 		var payload = this.tokenPayload.data4j;
 		return payload ? new (<any>model)(this, { username: angular.fromJson(payload).username }) : null;
 	}
