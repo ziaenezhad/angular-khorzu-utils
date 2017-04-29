@@ -64,7 +64,7 @@ export abstract class HttpResource extends Resource {
 		if (angular.isObject(data)) {
 			data.$$processing = true;
 		}
-		if (_.find(data, function (item: any) { return angular.isObject(item) && item.constructor.name == 'File'; })) {
+		if (data && _.find(data, function (item: any) { return angular.isObject(item) && item.constructor.name == 'File'; })) {
 			var formData = new FormData();
 			Object.keys(data).forEach(key => {
 				formData.append(key, data[key]);
@@ -80,7 +80,7 @@ export abstract class HttpResource extends Resource {
 				query
 			].join('/'),
 			headers: angular.extend({
-				'Content-Type': data.constructor.name == 'FormData' ? undefined : 'application/json',
+				'Content-Type': data && data.constructor.name == 'FormData' ? undefined : 'application/json',
 				'Accept': 'application/json'
 			}, headers),
 			uploadEventHandlers: {
