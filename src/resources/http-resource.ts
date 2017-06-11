@@ -28,6 +28,10 @@ export abstract class HttpResource extends Resource {
 		});
 	}
 
+	public get apiUrl() {
+		return this.api_url;
+	}
+
 	private injectErrorToInput(input: ng.INgModelController, status: string) {
 		input.$setValidity(status, false);
 		input.$viewChangeListeners.push(() => {
@@ -107,8 +111,8 @@ export abstract class HttpResource extends Resource {
 		return this.request<T>(query, 'GET', data, messages);
 	}
 
-	public $post<T>(query: string, data: {}, messages?: {}) {
-		return this.request<T>(query, 'POST', data, messages);
+	public $post<T>(query: string, data: {}, messages?: {}, headers?: {}) {
+		return this.request<T>(query, 'POST', data, messages, headers);
 	}
 
 	public $put<T>(query: string, data: {}, messages?: {}) {
@@ -119,7 +123,7 @@ export abstract class HttpResource extends Resource {
 		return this.request<T>(query, 'DELETE', data, messages);
 	}
 	//Action
-	public action<T>(query: string, params: {}, messages?: {}): ng.IPromise<T> {
-		return this.$post(query, params, messages);
+	public action<T>(query: string, params: {}, messages?: {}, headers?: {}): ng.IPromise<T> {
+		return this.$post(query, params, messages, headers);
 	}
 }
