@@ -85,12 +85,12 @@ export abstract class Model<R extends Resource> {
 	protected hasMany<M>(modelClass: IModelClass, messages?: {}): ng.IPromise<M[]> {
 		this.$$processing = true;
 		return this.$$resource.read<M[]>(this.$$queryPath([modelClass.resourceName]), null, messages).then(response => {
+			this.$$processing = false;
 			return this['$$' + modelClass.resourceName] = response.map(record => {
 				record = new (<any>modelClass)(this.$$resource, record);
 				//we sopose here every resource name habeeen ended with 's'
 				var property_name = '$$' + this.$$class.resourceName.substring(0, this.$$class.resourceName.length - 1);
 				record[property_name] = this;
-				this.$$processing = false;
 				return record;
 			});
 		});
