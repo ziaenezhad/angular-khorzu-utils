@@ -57,16 +57,19 @@ export abstract class Model<R extends Resource> {
 	}
 
 	protected belongsTo<M>(modelClass: IModelClass, foreignKey: string, messages?: {}): ng.IPromise<M> {
+		this.$$processing = true;
 		return this.$$resource.read(modelClass.queryPath([this[foreignKey]]), null, messages).then(response => {
 			response = new (<any>modelClass)(this.$$resource, response);
 			//we sopose here every resource name habeeen ended with 's'
 			var property_name = '$$' + this.$$class.resourceName.substring(0, this.$$class.resourceName.length - 1);
 			this[property_name] = response;
+			this.$$processing = false;
 			return response;
 		});
 	}
 
 	protected hasOne<M>(modelClass: IModelClass, messages?: {}): ng.IPromise<M> {
+		this.$$processing = true;
 		return this.$$resource.read(this.$$queryPath([modelClass.resourceName]), null, messages).then(response => {
 			response = new (<any>modelClass)(this.$$resource, response);
 			//we sopose here every resource name habeeen ended with 's'
@@ -74,17 +77,20 @@ export abstract class Model<R extends Resource> {
 			response[property_name] = this;
 			property_name = '$$' + modelClass.resourceName.substring(0, modelClass.resourceName.length - 1);
 			this[property_name] = response;
+			this.$$processing = false;
 			return response;
 		});
 	}
 
 	protected hasMany<M>(modelClass: IModelClass, messages?: {}): ng.IPromise<M[]> {
+		this.$$processing = true;
 		return this.$$resource.read<M[]>(this.$$queryPath([modelClass.resourceName]), null, messages).then(response => {
 			return this['$$' + modelClass.resourceName] = response.map(record => {
 				record = new (<any>modelClass)(this.$$resource, record);
 				//we sopose here every resource name habeeen ended with 's'
 				var property_name = '$$' + this.$$class.resourceName.substring(0, this.$$class.resourceName.length - 1);
 				record[property_name] = this;
+				this.$$processing = false;
 				return record;
 			});
 		});
