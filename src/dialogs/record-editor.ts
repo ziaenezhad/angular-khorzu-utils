@@ -18,7 +18,7 @@ export abstract class RecordEditor<M extends Model<any>, R extends Resource> ext
 		this.entity = this.entity ? this.entity : <any>{};
 	}
 
-	protected save(messages?: {}): ng.IPromise<M> {
+	protected save(messages?: {}, thenClose: boolean = true): ng.IPromise<M> {
 		if (this.validate()) {
 			messages = this.assignInputsToMessages(messages);
 			return (
@@ -26,7 +26,7 @@ export abstract class RecordEditor<M extends Model<any>, R extends Resource> ext
 					this.model.create<M>(this.resource, this.entity, messages) :
 					this.entity.save(messages)
 			).then(record => {
-				this.$mdDialog.hide(record);
+				thenClose && this.$mdDialog.hide(record);
 				return record;
 			});
 		}
