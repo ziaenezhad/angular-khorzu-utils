@@ -1,0 +1,45 @@
+{
+  "name": "angular-khorzu-utils",
+  "description": "An Angular 1 classe wrappers",
+  "authors": [
+    "Sajjad Shirazy <shirazy.sajjad@gmail.com>"
+  ],
+  "keywords": [
+    "angular",
+    "angular 1",
+    "utils",
+    "typescript",
+    "class",
+    "wrapper",
+    "khorzu"
+  ],
+  "license": "MIT",
+  "homepage": "https://github.com/sajjad-shirazy/angular-khorzu-utils",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/sajjad-shirazy/angular-khorzu-utils"
+  },
+  "ignore": [
+    "bower_components"
+  ],
+  "main": [
+    "dist/angular-khorzu-utils.js",
+    "dist/angular-khorzu-utils.css"
+  ],
+  "dependencies": {
+    "angular-ui-router": "^0.3.2",
+    "angular-material": "^1.0.0",
+    "angular-jwt": "^0.1.8",
+    "angularLocalStorage": "^0.3.2",
+    "lodash": "^4.17.4"
+  },
+  "_release": "e3ad73ad1c",
+  "_resolution": {
+    "type": "branch",
+    "branch": "master",
+    "commit": "e3ad73ad1caa21f34b618fe50f03704a49228f27"
+  },
+  "_source": "https://github.com/sajjad-shirazy/angular-khorzu-utils.git",
+  "_target": "*",
+  "_originalSource": "angular-khorzu-utils"
+}

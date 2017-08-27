@@ -58,7 +58,7 @@ export abstract class HttpResource extends Resource {
 			if (angular.isObject(message)) {
 				this.injectErrorToInput(message, status);
 			} else {
-				this.showErrorMessage(message ? message : 'خطای ' + status);
+				this.showErrorMessage((message || message == undefined) ? message : 'خطای ' + status);
 			}
 			defer.reject();
 		}

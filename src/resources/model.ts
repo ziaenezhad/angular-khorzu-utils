@@ -13,7 +13,7 @@ export interface IModelClass {
 export abstract class Model<R extends Resource> {
 	public static resourceName: string;
 	public static primaryKey: string = 'id';
-	public $$processing: boolean;
+	public $$processing?: boolean;
 
 	public static queryPath(routes: (string | number)[] = []): string {
 		return [<string | number>this.resourceName].concat(routes).join('/');
@@ -58,7 +58,7 @@ export abstract class Model<R extends Resource> {
 
 	protected belongsTo<M>(modelClass: IModelClass, foreignKey: string, messages?: {}): ng.IPromise<M> {
 		this.$$processing = true;
-		return this.$$resource.read(modelClass.queryPath([this[foreignKey]]), null, messages).then(response => {
+		return this.$$resource.read<M>(modelClass.queryPath([this[foreignKey]]), null, messages).then(response => {
 			response = new (<any>modelClass)(this.$$resource, response);
 			//we sopose here every resource name habeeen ended with 's'
 			var property_name = '$$' + this.$$class.resourceName.substring(0, this.$$class.resourceName.length - 1);
@@ -78,7 +78,7 @@ export abstract class Model<R extends Resource> {
 			property_name = '$$' + modelClass.resourceName.substring(0, modelClass.resourceName.length - 1);
 			this[property_name] = response;
 			this.$$processing = false;
-			return response;
+			return <any>response;
 		});
 	}
 
@@ -97,7 +97,14 @@ export abstract class Model<R extends Resource> {
 	}
 
 	public save(messages?: {}) {
-		return <any>this.$$resource.update(this.$$queryPath(), this, messages);
+		if (this.$$id) {
+			return this.$$resource.update<void>(this.$$queryPath(), this, messages);
+		} else {
+			return this.$$class.create(this.$$resource, this, messages).then(responce => {
+				this[this.$$class.primaryKey] = responce[this.$$class.primaryKey];
+				return responce;
+			});
+		}
 	}
 
 	public delete(messages?: {}, localList?: Model<R>[]) {
