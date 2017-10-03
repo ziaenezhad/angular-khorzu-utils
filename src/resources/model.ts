@@ -25,8 +25,8 @@ export abstract class Model<R extends Resource> {
 		});
 	}
 
-	public static all<M extends Model<Resource>>(resource: Resource, messages?: {}): ng.IPromise<M[]> {
-		return resource.read(this.resourceName, null, messages).then((response: M[]) => {
+	public static all<M extends Model<Resource>>(resource: Resource, params?:any, messages?: {}): ng.IPromise<M[]> {
+		return resource.read(this.resourceName, params, messages).then((response: M[]) => {
 			return response.map(record => new (<any>this)(resource, record));
 		});
 	}
@@ -98,7 +98,7 @@ export abstract class Model<R extends Resource> {
 
 	public save(messages?: {}) {
 		if (this.$$id) {
-			return this.$$resource.update<void>(this.$$queryPath(), this, messages);
+			return this.$$resource.update<this>(this.$$queryPath(), this, messages);
 		} else {
 			return this.$$class.create(this.$$resource, this, messages).then(responce => {
 				this[this.$$class.primaryKey] = responce[this.$$class.primaryKey];

@@ -21,12 +21,14 @@ export abstract class RecordEditor<M extends Model<any>, R extends Resource> ext
 	protected save(messages?: {}, thenClose: boolean = true): ng.IPromise<M> {
 		if (this.validate()) {
 			messages = this.assignInputsToMessages(messages);
+			this.entity.$$processing = true;
 			return (
 				this.createMod ?
 					this.model.create<M>(this.resource, this.entity, messages) :
 					this.entity.save(messages)
 			).then(record => {
 				thenClose && this.$mdDialog.hide(record);
+				this.entity.$$processing = false;
 				return record;
 			});
 		}
