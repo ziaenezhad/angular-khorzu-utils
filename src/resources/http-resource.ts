@@ -13,7 +13,7 @@ export abstract class HttpResource extends Resource {
 		protected api_url: string,
 		$mdToast,
 		$q,
-		protected $http: ng.IHttpService
+		public $http: ng.IHttpService
 	) {
 		super($mdToast, $q);
 		angular.extend(this.messages, {
